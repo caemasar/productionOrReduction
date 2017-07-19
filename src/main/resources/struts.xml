@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>  
+<!DOCTYPE struts PUBLIC  
+        "-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"  
+        "http://struts.apache.org/dtds/struts-2.3.dtd">
+<struts>
+	<constant name="struts.convention.default.parent.package"
+		value="crud-default" />
+	<constant name="struts.convention.package.locators" value="web" />
+	<constant name="struts.convention.package.locators.basePackage"
+		value="com.carnation.portal.web" />
+	<constant name="struts.custom.i18n.resources" value="messages" />
+	<constant name="struts.multipart.maxSize" value="1024000000"></constant>
+	<constant name="struts.action.extension" value="action,do,ajax" />
+	<constant name="struts.ui.theme" value="simple" />
+	<!-- 用于CRUD Action的parent package -->
+
+	<package name="globalResult" extends="convention-default"
+		abstract="true">
+		<global-results>
+			<result name="permissionDeny" type="redirect">/common/403.jsp</result>
+			<result name="resourceNotFound" type="redirect">/common/404.jsp</result>
+			<result name="internalError" type="redirect">/common/500.jsp</result>
+		</global-results>
+	</package>
+
+
+	<!-- 使用Convention插件,实现约定大于配置的零配置文件风格. 特殊的Result路径在Action类中使用@Result设定. -->
+</struts>  
