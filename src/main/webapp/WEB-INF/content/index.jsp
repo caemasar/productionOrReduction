@@ -1,11 +1,12 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
-<title>文件加密与解密</title>
+<title>productionOrReduction</title>
 <!-- 收藏用logo图标 -->
 <link rel="bookmark" type="image/x-icon" href="img/log128.ico" />
 <!-- 网站显示页logo图标 -->
@@ -67,7 +68,7 @@
 								</div>
 							</div>
 						</div>
-						<button type="button" class="btn btn-primary btn-block btn-default">上传</button>
+						<button type="button" class="btn btn-primary btn-block btn-default" data-toggle="modal" data-target="#uploadModal">上传</button>
 					</div>
 					<div class="col-md-4">
 						<div class="row">
@@ -101,7 +102,33 @@
 			</div>
 		</div>
 	</div>
-
+	<!-- 模态框（Modal） -->
+	<div class="modal fade bs-example-modal-lg" id="uploadModal" tabindex="-1" role="dialog"
+		aria-labelledby="uploadModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+					<h4 class="modal-title" id="uploadModalLabel">请选择要上传的文件</h4>
+				</div>
+				<div class="modal-body">
+					<form id="uploadForm" name="uploadForm" action="upload.action" method="POST" enctype="multipart/form-data">
+						<div class="form-group">
+							<label for="upload">上传文件</label> <input type="file" id="upload" name="upload">
+							<p class="help-block">选择任意文件，选择完成后点击提交按钮。</p>
+						</div>
+					</form>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+					<button type="button" class="btn btn-primary"
+						onclick="document.getElementById('uploadForm').submit();return false;$('#uploadModal').modal('hide');">提交</button>
+				</div>
+			</div>
+			<!-- /.modal-content -->
+		</div>
+		<!-- /.modal -->
+	</div>
 	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 	<script src="bootstrap/js/jquery.min.js"></script>
 	<!-- Include all compiled plugins (below), or include individual files as needed -->

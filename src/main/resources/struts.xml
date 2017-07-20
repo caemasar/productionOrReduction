@@ -12,6 +12,7 @@
 	<constant name="struts.multipart.maxSize" value="1024000000"></constant>
 	<constant name="struts.action.extension" value="action,do,ajax" />
 	<constant name="struts.ui.theme" value="simple" />
+	<constant name="struts.multipart.saveDir" value="/tmp" />
 	<!-- 用于CRUD Action的parent package -->
 
 	<package name="globalResult" extends="convention-default"
