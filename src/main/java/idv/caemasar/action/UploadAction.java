@@ -1,11 +1,12 @@
 package idv.caemasar.action;
 
 import java.io.File;
-
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Random;
+
+import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.logging.log4j.LogManager;
@@ -14,12 +15,17 @@ import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.InterceptorRef;
 import org.apache.struts2.convention.annotation.InterceptorRefs;
+import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.convention.annotation.Results;
+import org.apache.struts2.json.annotations.JSON;
 
+import com.opensymphony.xwork2.ActionContext;
+
+@ParentPackage("json-default")
 @Action("upload")
 @InterceptorRefs(value = { @InterceptorRef("fileUploadStack") })
-@Results({ @Result(name = "success", location = "/index.jsp") })
+@Results({ @Result(name = "UPLOADRESULT", type = "json", params = { "root", "uploadResult" }) })
 public class UploadAction extends BaseAction {
 	/**
 	 * 
@@ -28,9 +34,20 @@ public class UploadAction extends BaseAction {
 
 	private static Logger logger = LogManager.getLogger(UploadAction.class);
 
+	private String uploadResult;
+
 	private File upload;
 	private String uploadFileName;
 	private String uploadContentType;
+
+	@JSON(name = "uploadResult")
+	public String getUploadResult() {
+		return uploadResult;
+	}
+
+	public void setUploadResult(String uploadResult) {
+		this.uploadResult = uploadResult;
+	}
 
 	public File getUpload() {
 		return upload;
@@ -57,7 +74,7 @@ public class UploadAction extends BaseAction {
 	}
 
 	@Override
-	public String execute() throws Exception {
+	public String execute() {
 		logger.info("upload::" + upload);
 		logger.info("uploadFileName::" + uploadFileName);
 		logger.info("uploadContentType::" + uploadContentType);
@@ -66,13 +83,28 @@ public class UploadAction extends BaseAction {
 		String targetFileName = generateFileName(uploadFileName);
 		logger.info("targetFileName::" + targetFileName);
 		File target = new File(targetDirectory, targetFileName);
-		System.out.println("uploadFile::" + upload);
-		System.out.println("uploadFileName::" + uploadFileName);
-		System.out.println("uploadContentType::" + uploadContentType);
-		System.out.println("targetDirectory::" + targetDirectory);
-		System.out.println("targetFileName::" + targetFileName);
-		FileUtils.copyFile(upload, target);
-		return "success";
+		try {
+			FileUtils.copyFile(upload, target);
+			HttpServletResponse response = (HttpServletResponse) ActionContext.getContext()
+					.get(org.apache.struts2.StrutsStatics.HTTP_RESPONSE);
+
+			// HttpServletRequest request =
+			// (HttpServletRequest)ActionContext.getContext().get(org.apache.struts2.StrutsStatics.HTTP_REQUEST);
+			response.setContentType("text/html; charset=utf-8");
+			//
+			// PrintWriter pw = response.getWriter();
+			//
+			// pw.write("zeze");
+			//
+			// pw.flush();
+			//
+			// pw.close();
+			uploadResult = "SUCCESS";
+		} catch (Exception e) {
+			logger.info("上传失败::" + e.getMessage());
+			uploadResult = "ERROR";
+		}
+		return "UPLOADRESULT";
 	}
 
 	private String generateFileName(String fileName) {

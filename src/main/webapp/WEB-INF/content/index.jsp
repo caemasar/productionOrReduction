@@ -112,7 +112,7 @@
 					<h4 class="modal-title" id="uploadModalLabel">请选择要上传的文件</h4>
 				</div>
 				<div class="modal-body">
-					<form id="uploadForm" name="uploadForm" action="upload.action" method="POST" enctype="multipart/form-data">
+					<form id="uploadForm" name="uploadForm" method="POST" enctype="multipart/form-data">
 						<div class="form-group">
 							<label for="upload">上传文件</label> <input type="file" id="upload" name="upload">
 							<p class="help-block">选择任意文件，选择完成后点击提交按钮。</p>
@@ -121,8 +121,7 @@
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-					<button type="button" class="btn btn-primary"
-						onclick="document.getElementById('uploadForm').submit();return false;$('#uploadModal').modal('hide');">提交</button>
+					<button type="button" class="btn btn-primary" onclick="delivery()">提交</button>
 				</div>
 			</div>
 			<!-- /.modal-content -->
@@ -133,5 +132,7 @@
 	<script src="bootstrap/js/jquery.min.js"></script>
 	<!-- Include all compiled plugins (below), or include individual files as needed -->
 	<script src="bootstrap/js/bootstrap.min.js"></script>
+	<script src="js/form/jquery.form.min.js"></script>
+	<script src="js/upload.js"></script>
 </body>
 </html>
