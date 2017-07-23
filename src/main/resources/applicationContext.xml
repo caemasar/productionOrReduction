@@ -7,7 +7,8 @@
         http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd  
         http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd">
 
-	<!-- spring注解自动注入 <context:component-scan base-package="news"></context:component-scan> -->
+	<!-- spring注解自动注入 -->
+	<context:component-scan base-package="idv.caemasar.service"></context:component-scan>
 
 	<!-- 引入外部属性文件 -->
 	<context:property-placeholder location="classpath:db.properties" />
