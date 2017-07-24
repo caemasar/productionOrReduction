@@ -1,11 +1,15 @@
 package idv.caemasar.action;
 
 import java.io.File;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.Random;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.io.FileUtils;
@@ -20,7 +24,11 @@ import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.convention.annotation.Results;
 import org.apache.struts2.json.annotations.JSON;
 
+import com.alibaba.fastjson.JSONArray;
 import com.opensymphony.xwork2.ActionContext;
+
+import idv.caemasar.entity.UploadFile;
+import idv.caemasar.service.UploadFileService;
 
 @ParentPackage("json-default")
 @Action("upload")
@@ -33,6 +41,9 @@ public class UploadAction extends BaseAction {
 	private static final long serialVersionUID = 3654990021307505728L;
 
 	private static Logger logger = LogManager.getLogger(UploadAction.class);
+
+	@Resource
+	private UploadFileService UploadFileService;
 
 	private String uploadResult;
 
@@ -91,15 +102,11 @@ public class UploadAction extends BaseAction {
 			// HttpServletRequest request =
 			// (HttpServletRequest)ActionContext.getContext().get(org.apache.struts2.StrutsStatics.HTTP_REQUEST);
 			response.setContentType("text/html; charset=utf-8");
-			//
-			// PrintWriter pw = response.getWriter();
-			//
-			// pw.write("zeze");
-			//
-			// pw.flush();
-			//
-			// pw.close();
-			uploadResult = "SUCCESS";
+
+			UploadFile uploadFile = new UploadFile(uploadFileName, targetDirectory + targetFileName, new Date());
+			if (UploadFileService.addUploadFile(uploadFile)) {
+				uploadResult = "SUCCESS";
+			}
 		} catch (Exception e) {
 			logger.info("上传失败::" + e.getMessage());
 			uploadResult = "ERROR";
@@ -119,4 +126,26 @@ public class UploadAction extends BaseAction {
 		return formatDate + random + extension;
 	}
 
+	private void findALL() {
+		List<UploadFile> uploadFiles = UploadFileService.findAll();
+		HttpServletResponse response = (HttpServletResponse) ActionContext.getContext()
+				.get(org.apache.struts2.StrutsStatics.HTTP_RESPONSE);
+
+		// HttpServletRequest request =
+		// (HttpServletRequest)ActionContext.getContext().get(org.apache.struts2.StrutsStatics.HTTP_REQUEST);
+		response.setContentType("text/html; charset=utf-8");
+		PrintWriter pw;
+		try {
+			pw = response.getWriter();
+
+			pw.write(JSONArray.toJSONString(uploadFiles));
+
+			pw.flush();
+
+			pw.close();
+		} catch (IOException e) {
+			logger.error(e.getMessage());
+		}
+
+	}
 }
