@@ -22,13 +22,13 @@ public class LoginAction extends BaseAction {
 
 	@Override
 	public String execute() {
-		User user = new User(1, "张三", "123");
+		User user = new User(1, "zhangsan", "123");
 		if (validateUser(user)) {
 			logger.info("LoginAction::true");
 			return SUCCESS;
 		} else {
 			logger.info("LoginAction::false");
-			return SUCCESS;
+			return ERROR;
 		}
 	}
 
