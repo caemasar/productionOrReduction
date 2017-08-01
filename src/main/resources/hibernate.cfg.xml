@@ -10,7 +10,7 @@
 		<property name="hibernate.dialect">org.hibernate.dialect.Oracle10gDialect</property>
 		<property name="hibernate.show_sql">true</property>
 		<property name="hibernate.format_sql">true</property>
-		<property name="hibernate.hbm2ddl.auto">validate</property>
+		<property name="hibernate.hbm2ddl.auto">create</property>
 		<!-- validate update create -->
 		<mapping class="idv.caemasar.entity.User" />
 		<mapping class="idv.caemasar.entity.UploadFile" />

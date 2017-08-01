@@ -58,8 +58,10 @@
 				<div class="row">
 					<div class="col-md-4">
 						<div class="row">
-							<div class="col-md-12 labelBox" id="uploadBox">
-								<span class="label label-info">上传了什么</span>
+							<div class="col-md-12 labelBox">
+								<div id="uploadBox">
+									<span class="label label-info">上传了什么</span>
+								</div>
 								<div class="progress">
 									<div class="progress-bar progress-bar-warning progress-bar-striped active" role="progressbar"
 										aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="width: 20%">

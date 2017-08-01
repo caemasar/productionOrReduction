@@ -18,8 +18,8 @@ public class UploadFile implements Serializable {
 	 */
 	private static final long serialVersionUID = -6379961825366772510L;
 	@Id
-	@SequenceGenerator(name = "generator", sequenceName = "T_UPLOADFILE_SEQUENCE_UP_ID")
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "generator")
+	@SequenceGenerator(name = "sequenceGenerator", sequenceName = "T_UPLOADFILE_SEQUENCE_UP_ID")
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
 	private int up_id;
 	private String up_filename;
 	private String up_filepath;

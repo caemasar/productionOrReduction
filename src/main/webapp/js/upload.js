@@ -17,14 +17,17 @@ function delivery() {
 }
 function fuckTheLabel() {
   var uploadBox = $("#uploadBox");
+  var sheet = "";
   $.ajax({
     url: "upload!findAll.action",
     async: false,
     dataType: "json",
     success: function(data) {
       $.each(data, function(index, content) {
-        console.log("index: " + index + ",and content.up_filename"
+        console.log("index: " + index + ",and content.up_filename: "
                 + content.up_filename);
+        sheet += "<span class='label label-info'>" + content.up_filename
+                + "</span>&nbsp;";
       });
     },
     error: function(XmlHttpRequest, textStatus, errorThrown) {
@@ -33,7 +36,11 @@ function fuckTheLabel() {
       console.log(errorThrown);
     }
   });
+  uploadBox.html(sheet);
 }
-//$(function() {
-//  fuckTheLabel();
-//});
+// $(function() {
+// fuckTheLabel();
+// });
+$(document).ready(function() {
+  fuckTheLabel();
+});
