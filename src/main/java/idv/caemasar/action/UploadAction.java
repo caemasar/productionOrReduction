@@ -126,19 +126,21 @@ public class UploadAction extends BaseAction {
 		return formatDate + random + extension;
 	}
 
-	private void findALL() {
+	public void findAll() {
 		List<UploadFile> uploadFiles = UploadFileService.findAll();
 		HttpServletResponse response = (HttpServletResponse) ActionContext.getContext()
 				.get(org.apache.struts2.StrutsStatics.HTTP_RESPONSE);
-
+		logger.info("uploadFiles::" + uploadFiles);
 		// HttpServletRequest request =
 		// (HttpServletRequest)ActionContext.getContext().get(org.apache.struts2.StrutsStatics.HTTP_REQUEST);
-		response.setContentType("text/html; charset=utf-8");
+		// response.setContentType("text/html; charset=utf-8");
 		PrintWriter pw;
+		String jsonString;
 		try {
 			pw = response.getWriter();
-
-			pw.write(JSONArray.toJSONString(uploadFiles));
+			jsonString = JSONArray.toJSONString(uploadFiles);
+			logger.info("jsonString::" + jsonString);
+			pw.write(jsonString);
 
 			pw.flush();
 

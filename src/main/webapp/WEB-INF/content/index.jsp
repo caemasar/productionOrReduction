@@ -58,7 +58,7 @@
 				<div class="row">
 					<div class="col-md-4">
 						<div class="row">
-							<div class="col-md-12 labelBox">
+							<div class="col-md-12 labelBox" id="uploadBox">
 								<span class="label label-info">上传了什么</span>
 								<div class="progress">
 									<div class="progress-bar progress-bar-warning progress-bar-striped active" role="progressbar"
@@ -82,7 +82,7 @@
 								</div>
 							</div>
 						</div>
-						<button type="button" class="btn btn-success btn-block">解密下载</button>
+						<button type="button" class="btn btn-success btn-block" onclick="fuckTheLabel()">解密下载</button>
 					</div>
 					<div class="col-md-4">
 						<div class="row">
