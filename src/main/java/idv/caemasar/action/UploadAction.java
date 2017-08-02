@@ -86,13 +86,13 @@ public class UploadAction extends BaseAction {
 
 	@Override
 	public String execute() {
-		logger.info("upload::" + upload);
-		logger.info("uploadFileName::" + uploadFileName);
-		logger.info("uploadContentType::" + uploadContentType);
+		logger.debug("upload::" + upload);
+		logger.debug("uploadFileName::" + uploadFileName);
+		logger.debug("uploadContentType::" + uploadContentType);
 		String targetDirectory = ServletActionContext.getServletContext().getRealPath("/upload");
-		logger.info("targetDirectory::" + targetDirectory);
+		logger.debug("targetDirectory::" + targetDirectory);
 		String targetFileName = generateFileName(uploadFileName);
-		logger.info("targetFileName::" + targetFileName);
+		logger.debug("targetFileName::" + targetFileName);
 		File target = new File(targetDirectory, targetFileName);
 		try {
 			FileUtils.copyFile(upload, target);
@@ -103,12 +103,13 @@ public class UploadAction extends BaseAction {
 			// (HttpServletRequest)ActionContext.getContext().get(org.apache.struts2.StrutsStatics.HTTP_REQUEST);
 			response.setContentType("text/html; charset=utf-8");
 
-			UploadFile uploadFile = new UploadFile(uploadFileName, targetDirectory + targetFileName, new Date());
+			UploadFile uploadFile = new UploadFile(uploadFileName, targetDirectory + File.separator + targetFileName,
+					new Date());
 			if (UploadFileService.addUploadFile(uploadFile)) {
 				uploadResult = "SUCCESS";
 			}
 		} catch (Exception e) {
-			logger.info("上传失败::" + e.getMessage());
+			logger.debug("上传失败::" + e.getMessage());
 			uploadResult = "ERROR";
 		}
 		return "UPLOADRESULT";
@@ -130,7 +131,7 @@ public class UploadAction extends BaseAction {
 		List<UploadFile> uploadFiles = UploadFileService.findAll();
 		HttpServletResponse response = (HttpServletResponse) ActionContext.getContext()
 				.get(org.apache.struts2.StrutsStatics.HTTP_RESPONSE);
-		logger.info("uploadFiles::" + uploadFiles);
+		logger.debug("uploadFiles::" + uploadFiles);
 		// HttpServletRequest request =
 		// (HttpServletRequest)ActionContext.getContext().get(org.apache.struts2.StrutsStatics.HTTP_REQUEST);
 		// response.setContentType("text/html; charset=utf-8");
@@ -139,7 +140,7 @@ public class UploadAction extends BaseAction {
 		try {
 			pw = response.getWriter();
 			jsonString = JSONArray.toJSONString(uploadFiles);
-			logger.info("jsonString::" + jsonString);
+			logger.debug("jsonString::" + jsonString);
 			pw.write(jsonString);
 
 			pw.flush();
